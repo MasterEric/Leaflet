@@ -1,5 +1,5 @@
 /* @preserve
- * Leaflet 1.7.1+dist.a2f7c5e, a JS library for interactive maps. http://leafletjs.com
+ * Leaflet 1.7.1+Detached: 2d7a345265d905a062868d5cac059a9bb2fe2309.2d7a345, a JS library for interactive maps. http://leafletjs.com
  * (c) 2010-2019 Vladimir Agafonkin, (c) 2010-2011 CloudMade
  */
 
@@ -9,7 +9,7 @@
   (factory((global.L = {})));
 }(this, (function (exports) { 'use strict';
 
-  var version = "1.7.1+dist.bc918d4b";
+  var version = "1.7.1";
 
   /*
    * @namespace Util
@@ -11538,6 +11538,9 @@
 
   		tile = this._tiles[key];
   		if (!tile) { return; }
+
+      // ERIC: IDK why this error was happening but okay.
+      if (!this._map) { return; }
 
   		tile.loaded = +new Date();
   		if (this._map._fadeAnimated) {

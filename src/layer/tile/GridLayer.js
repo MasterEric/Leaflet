@@ -854,6 +854,9 @@ export var GridLayer = Layer.extend({
 		tile = this._tiles[key];
 		if (!tile) { return; }
 
+    // ERIC: IDK why this error was happening but okay.
+    if (!this._map) { return; }
+
 		tile.loaded = +new Date();
 		if (this._map._fadeAnimated) {
 			DomUtil.setOpacity(tile.el, 0);
