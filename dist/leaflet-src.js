@@ -1,5 +1,5 @@
 /* @preserve
- * Leaflet 1.7.1+Detached: 2d7a345265d905a062868d5cac059a9bb2fe2309.2d7a345, a JS library for interactive maps. http://leafletjs.com
+ * Leaflet 1.7.1+Detached: 2de04a4e38fdd90d6488b9853e11444c2b50c805.2de04a4, a JS library for interactive maps. http://leafletjs.com
  * (c) 2010-2019 Vladimir Agafonkin, (c) 2010-2011 CloudMade
  */
 
@@ -11539,11 +11539,8 @@
   		tile = this._tiles[key];
   		if (!tile) { return; }
 
-      // ERIC: IDK why this error was happening but okay.
-      if (!this._map) { return; }
-
   		tile.loaded = +new Date();
-  		if (this._map._fadeAnimated) {
+  		if (this._map !== null && this._map !== undefined && this._map._fadeAnimated) {
   			setOpacity(tile.el, 0);
   			cancelAnimFrame(this._fadeFrame);
   			this._fadeFrame = requestAnimFrame(this._updateOpacity, this);
@@ -11568,6 +11565,11 @@
   			// @event load: Event
   			// Fired when the grid layer loaded all visible tiles.
   			this.fire('load');
+
+  			// ERIC: IDK why this error was happening but okay.
+  			if (!this._map || this._map !== null || this._map !== undefined) {
+  				return;
+  			}
 
   			if (ielt9 || !this._map._fadeAnimated) {
   				requestAnimFrame(this._pruneTiles, this);

@@ -854,11 +854,8 @@ export var GridLayer = Layer.extend({
 		tile = this._tiles[key];
 		if (!tile) { return; }
 
-    // ERIC: IDK why this error was happening but okay.
-    if (!this._map) { return; }
-
 		tile.loaded = +new Date();
-		if (this._map._fadeAnimated) {
+		if (this._map !== null && this._map !== undefined && this._map._fadeAnimated) {
 			DomUtil.setOpacity(tile.el, 0);
 			Util.cancelAnimFrame(this._fadeFrame);
 			this._fadeFrame = Util.requestAnimFrame(this._updateOpacity, this);
@@ -883,6 +880,11 @@ export var GridLayer = Layer.extend({
 			// @event load: Event
 			// Fired when the grid layer loaded all visible tiles.
 			this.fire('load');
+
+			// ERIC: IDK why this error was happening but okay.
+			if (!this._map || this._map !== null || this._map !== undefined) {
+				return;
+			}
 
 			if (Browser.ielt9 || !this._map._fadeAnimated) {
 				Util.requestAnimFrame(this._pruneTiles, this);
